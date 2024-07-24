@@ -1,0 +1,37 @@
+.card {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    width: 900px !important;
+    background-color: #2e2d2d;
+    color: #fff;
+  }
+  
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: 10px; /*  space between icons */
+  }
+  
+  .icons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .img{
+    width: 90px;
+    height: 90px;
+    border-radius: 6px;
+    display: flex;
+    justify-self: start;
+    align-items: start;
+    align-self: start;
+  }
+  .name{
+    font-weight: bold;
+  }
+  .price{
+    color: #a1E533;
+  }
+  

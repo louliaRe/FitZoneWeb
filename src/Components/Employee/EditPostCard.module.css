@@ -1,0 +1,30 @@
+.text{
+    font-weight: bold;
+}
+.card{
+    margin: 20px;
+    background-color:#2e2d2d ;
+    color: #fff;
+}
+.CB{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+.time{
+    font-size: smaller;
+    margin-left: 50px;
+}
+.img{
+    height: 150px;
+    width: 250px;
+    display: flex;
+    justify-self: center;
+    align-self: center;
+}
+.btns{
+    display:flex;
+    justify-content:end;
+    align-items:end;
+}

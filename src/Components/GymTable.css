@@ -1,0 +1,25 @@
+.table {
+  width: max-content !important;
+    justify-content: center  !important;
+    flex-direction: column;
+    align-self: center !important;
+    align-content: center !important;
+    align-items: center !important;
+    background-color:  #2e2d2d !important;
+    /* background-color: 
+    #2e2d2d; */
+    color: antiquewhite;
+    margin-left: -350px;
+  }
+
+  .head{
+   color: #a1E533;
+   font-weight: bold;
+   font-size: medium;
+  }
+  
+  .btn{
+    margin-left: 30%;
+    margin-top: 15px;
+    background-color: #a1E533 !important ;
+  }

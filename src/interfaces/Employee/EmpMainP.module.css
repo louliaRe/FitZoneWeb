@@ -1,0 +1,13 @@
+.text{
+    color: #fff;
+    font-size: medium;
+    margin-top: 20px;
+}
+.rec{
+    background-color: #282828;
+    padding: 20px;
+    display: flexbox;
+    width: 1150px;
+    justify-self: start;
+    margin-left: -110px !important;
+}

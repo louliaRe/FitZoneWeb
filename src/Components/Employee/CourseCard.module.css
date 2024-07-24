@@ -1,0 +1,12 @@
+.card{
+    background-color: #2e2d2d;
+    color: #fff;
+}
+.group{
+    display:flex;
+    justify-content:end;
+    align-items:end;
+}
+.name{
+    font-weight: bold;
+}

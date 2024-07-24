@@ -1,0 +1,50 @@
+/* src/interfaces/ManageGymHall.module.css */
+.hallDimensions {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+    color: #fff;
+  }
+  
+  .hallGrid {
+    display: grid;
+    gap: 1px;
+    margin: 20px 0;
+    background-color: #282828;
+  }
+  
+  .gridItem {
+    border: 1px solid #86ef2b;
+    background-color: #2e2d2d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    cursor: pointer;
+  }
+  
+  .occupied {
+    background-color: #86ef2b;
+  }
+  
+  .machine {
+    text-align: center;
+  }
+  
+  /* .machine {
+    background-color: #86ef2b;
+    padding: 5px;
+    border-radius: 4px;
+    color: #282828;
+  } */
+  .btn{
+    background-color: #86ef2b;
+    margin-top: 10px;
+    margin-left: 40%;
+  }
+  .IB{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 5px;
+  }

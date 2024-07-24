@@ -1,0 +1,15 @@
+.card1{
+    display: flex;
+    justify-content: start !important;
+    align-items: start;
+    align-self: center !important;
+    margin-left: 20%;
+    width: 600px;
+    margin-bottom: '20px' ;
+    background-color: #2e2d2d;     
+    color: #fff;
+}
+.name{
+    font-weight: bold;
+    font-size: large;
+}

@@ -1,0 +1,22 @@
+.gyms-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+    height: 10cm;
+    width: 7cm;
+    border-radius: 10px;
+    background-color: #a6ff00 !important;
+    color: white !important;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+  }
+  .text{
+    font-size: larger !important;
+    font-weight: bold !important;
+
+  }
+  
+  .gyms-card:hover {
+    transform: scale(1.05);
+  }

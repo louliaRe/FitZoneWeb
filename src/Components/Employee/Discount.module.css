@@ -1,0 +1,14 @@
+.con{
+    color: #fff;
+    font-weight: bold;
+    width: 600px;
+}
+.btn{
+    margin-top: 40px;
+    margin-left: 25%;
+    width: 300px;
+  }
+  .error {
+    color: red;
+    margin-top: 10px;
+}

@@ -1,0 +1,181 @@
+Yes, creating a separate file (or multiple files) for managing all your API calls is a good practice. This helps in organizing your code and makes it easier to maintain and reuse API calls throughout your application. You can create a dedicated API service file for each collection or domain of your application.
+
+Here's a step-by-step guide on how to do this:
+
+### Step 1: Create an API Service File
+
+Create a file named `apiService.js` or, if you prefer more granularity, create multiple files like `postService.js`, `authService.js`, etc.
+
+#### Example `apiService.js`
+
+```javascript
+import axios from 'axios';
+
+const API_BASE_URL = 'http://your-api-base-url.com/api'; // Replace with your actual API base URL
+
+// Fetch all posts
+export const fetchPosts = async () => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/posts`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching posts:', error);
+    throw error;
+  }
+};
+
+// Add a new post
+export const addPost = async (post) => {
+  try {
+    const response = await axios.post(`${API_BASE_URL}/posts`, post);
+    return response.data;
+  } catch (error) {
+    console.error('Error adding post:', error);
+    throw error;
+  }
+};
+
+// Approve a post
+export const approvePost = async (postId) => {
+  try {
+    await axios.post(`${API_BASE_URL}/posts/${postId}/approve`);
+  } catch (error) {
+    console.error('Error approving post:', error);
+    throw error;
+  }
+};
+
+// Deny a post
+export const denyPost = async (postId) => {
+  try {
+    await axios.post(`${API_BASE_URL}/posts/${postId}/deny`);
+  } catch (error) {
+    console.error('Error denying post:', error);
+    throw error;
+  }
+};
+```
+
+### Step 2: Use the API Service in Your Component
+
+Now you can use these functions in your `ManagePosts` component.
+
+#### Updated `ManagePosts.js`
+
+```jsx
+import React, { useEffect, useState } from 'react';
+import { Container, Button, TextInput, Textarea, Group, Avatar, Card } from '@mantine/core';
+import PostCard from '../../Components/PostCard';
+import { fetchPosts, addPost, approvePost, denyPost } from '../../services/apiService';
+
+const ManagePosts = () => {
+  const [posts, setPosts] = useState([]);
+  const [newPost, setNewPost] = useState({ publisherName: '', publisherImage: '', content: '', image: '' });
+
+  useEffect(() => {
+    const getPosts = async () => {
+      try {
+        const fetchedPosts = await fetchPosts();
+        setPosts(fetchedPosts);
+      } catch (error) {
+        console.error('Error fetching posts:', error);
+      }
+    };
+
+    getPosts();
+  }, []);
+
+  const handleApprove = async (postId) => {
+    try {
+      await approvePost(postId);
+      setPosts(posts.filter(post => post.id !== postId));
+    } catch (error) {
+      console.error('Error approving post:', error);
+    }
+  };
+
+  const handleDeny = async (postId) => {
+    try {
+      await denyPost(postId);
+      setPosts(posts.filter(post => post.id !== postId));
+    } catch (error) {
+      console.error('Error denying post:', error);
+    }
+  };
+
+  const handleAddPost = async (e) => {
+    e.preventDefault();
+    try {
+      const addedPost = await addPost(newPost);
+      setPosts([...posts, addedPost]);
+      setNewPost({ publisherName: '', publisherImage: '', content: '', image: '' });
+    } catch (error) {
+      console.error('Error adding post:', error);
+    }
+  };
+
+  const handleChange = (e) => {
+    setNewPost({ ...newPost, [e.target.name]: e.target.value });
+  };
+
+  return (
+    <Container>
+      <h1>Manage Posts</h1>
+      <Card shadow="sm" padding="lg" style={{ marginBottom: '20px' }}>
+        <Group align="center">
+          <Avatar src={newPost.publisherImage} alt={newPost.publisherName} />
+          <TextInput
+            placeholder="Publisher Name"
+            type="text"
+            name="publisherName"
+            value={newPost.publisherName}
+            onChange={handleChange}
+            required
+            style={{ flexGrow: 1, marginLeft: '10px' }}
+          />
+        </Group>
+        <Textarea
+          placeholder="What's on your mind?"
+          name="content"
+          value={newPost.content}
+          onChange={handleChange}
+          required
+          style={{ marginTop: '10px' }}
+        />
+        <TextInput
+          placeholder="Image URL"
+          type="text"
+          name="image"
+          value={newPost.image}
+          onChange={handleChange}
+          style={{ marginTop: '10px' }}
+        />
+        <Button onClick={handleAddPost} color="#a1E533" style={{ marginTop: '10px' }}>Add Post</Button>
+      </Card>
+
+      {posts.map(post => (
+        <PostCard 
+          key={post.id}
+          post={post}
+          onApprove={handleApprove}
+          onDeny={handleDeny}
+        />
+      ))}
+    </Container>
+  );
+};
+
+export default ManagePosts;
+```
+
+### Explanation
+
+1. **API Service File**:
+   - `apiService.js` contains all the API calls related to posts, such as fetching posts, adding a new post, approving a post, and denying a post. This keeps your API-related code organized and separated from your component logic.
+
+2. **Component Update**:
+   - The `ManagePosts` component now imports and uses the functions from `apiService.js`.
+   - `useEffect` fetches the posts from the backend when the component mounts.
+   - The `handleApprove`, `handleDeny`, and `handleAddPost` functions use the API service functions to interact with the backend and update the component's state accordingly.
+
+By following this approach, your code becomes more modular and easier to maintain. You can now easily add more API calls and manage them in their respective service files.
