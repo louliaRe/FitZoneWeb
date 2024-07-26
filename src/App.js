@@ -31,6 +31,8 @@ import ManageGymHall from './interfaces/Employee/ManageGymHall';
 import Header from './Components/Header';
 import Branches from './interfaces/Branches';
 import DiscountCarousel from './Components/Employee/DiscountCarsouel';
+import ProductsTable from './Components/Employee/ProductsTable';
+import ManageProduct from './interfaces/Employee/ManageProducts';
 function App() {
   return (
     <MantineProvider
@@ -76,6 +78,8 @@ function App() {
                 <Route path='/EmpManageCoaches' element={<ManageCoaches/>} />
                 <Route path='/EmpManagePosts' element={<ManagePosts/>} />
                 <Route path='/EmpManageStore' element={<ManageStore/>} />
+                <Route path="/EmpManageProducts/:categoryId/:branch_id" element={<ManageProduct />} />
+                
                 <Route path="/EmpManage-gym-hall" element={<ManageGymHall />} />
                 <Route path="/EmpManage-courses" element={<ManageCourse />} />
                 {/* <Route path="/Empcourses-discount" element={<CoursesDiscountPage />} /> */}

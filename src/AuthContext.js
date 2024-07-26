@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }) => {
         setAuthState(prevState => ({
             ...prevState,
             accessToken,
-            refreshToken,
+            
             isAuthenticated: true,
             role,
             username,

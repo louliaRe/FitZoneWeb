@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextInput, Button, FileInput, Checkbox, Group } from '@mantine/core';
+import { TextInput, Button, FileInput, Checkbox, Group, MultiSelect } from '@mantine/core';
 import classes from './ClothesForm.module.css';
 
 const ClothesForm = () => {
@@ -8,7 +8,8 @@ const ClothesForm = () => {
     details: '',
     price: '',
     image: '',
-    sizes: []
+    sizes: [],
+    color:[]
   });
 
   const handleChange = (e) => {
@@ -31,6 +32,9 @@ const ClothesForm = () => {
       <TextInput label="Details" name="details" value={clothes.details} onChange={handleChange} />
       <TextInput label="Price" name="price" type="number" value={clothes.price} onChange={handleChange} />
       <FileInput label="Image URL" name="image" value={clothes.image} onChange={handleChange} />
+      <MultiSelect label='Color' name='color' value = {clothes.color} 
+      data={[]}
+      onChange={handleChange}/>
 
       <Checkbox.Group
         label="Sizes"
