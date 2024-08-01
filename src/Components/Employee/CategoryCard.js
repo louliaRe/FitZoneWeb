@@ -10,7 +10,7 @@ const CategoryCard = ({ category }) => {
   const {authState}= useAuth();
   const getImageSrc = (categoryName) => {
     switch (categoryName) {
-      case 'accessories':
+      case 'Accessory':
         return '/clothes.jpg';
       case 'Meal':
         return '/meals.jpg';

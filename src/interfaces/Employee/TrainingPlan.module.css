@@ -1,0 +1,21 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    
+  }
+  
+  .cardContainer {
+    display: flex;  
+    justify-content: space-between;
+    gap: 30px; /* Adjust the gap to increase/decrease space between cards */
+  }
+  
+  .transparentText {
+    background-color: rgba(255, 255, 255, 0.03); /* Adjust the rgba values to change the transparency and color */
+   color: white;
+    padding: 5px;
+    border-radius: 4px; /* Optional: for rounded corners */
+  }
+  

@@ -27,13 +27,13 @@ useEffect(() => {
     const fetchAllProducts = async () => {
       try {
         const data = await fetchProducts(authState.accessToken, authState.branch_id, categoryId);
-        setProducts(data); // Ensure products are set here
+        setProducts(data); 
         console.log("pro", data)
       } catch (error) {
         console.error('Error fetching products:', error);
       }
     };
-
+console.log('products', products)
     fetchAllProducts();
   }, [authState.accessToken, authState.branch_id, categoryId]);
 

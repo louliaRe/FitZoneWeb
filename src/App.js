@@ -33,6 +33,8 @@ import Branches from './interfaces/Branches';
 import DiscountCarousel from './Components/Employee/DiscountCarsouel';
 import ProductsTable from './Components/Employee/ProductsTable';
 import ManageProduct from './interfaces/Employee/ManageProducts';
+import TrainingPlan from './interfaces/Employee/TrainingPlan';
+import ManageGym from './interfaces/Employee/ManageGym';
 function App() {
   return (
     <MantineProvider
@@ -80,7 +82,7 @@ function App() {
                 <Route path='/EmpManageStore' element={<ManageStore/>} />
                 <Route path="/EmpManageProducts/:categoryId/:branch_id" element={<ManageProduct />} />
                 
-                <Route path="/EmpManage-gym-hall" element={<ManageGymHall />} />
+                <Route path="/EmpManage-gym" element={<ManageGym/>} />
                 <Route path="/EmpManage-courses" element={<ManageCourse />} />
                 {/* <Route path="/Empcourses-discount" element={<CoursesDiscountPage />} /> */}
                 <Route path="/EmpDiscountCarousel" element={<DiscountCarousel />} />
@@ -92,6 +94,7 @@ function App() {
                 <Route path='/EmpClothesForm' element={<ClothesForm/>} />
                 <Route path='/EmpMealsForm' element={<MealsForm/>} />
                 <Route path='/EmpSupplementForm' element={<SupplementsForm/>} />
+                <Route path='/EmpTrainingPlan' element={<TrainingPlan/>}/>
                 
               </Routes>
             </AppShell.Main>
