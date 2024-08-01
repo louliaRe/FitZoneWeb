@@ -66,9 +66,7 @@ export const getCourses = async (accessToken,id) =>{
                 Authorization: `Bearer ${accessToken}`,
                
             },
-            // params: {
-            //     'branch_id': id,
-            // },
+
         });
         return respons.data;
     }catch(error){

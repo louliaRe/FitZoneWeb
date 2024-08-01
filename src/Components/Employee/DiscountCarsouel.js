@@ -1,4 +1,3 @@
-// src/Components/DiscountCarousel.js
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Carousel } from '@mantine/carousel';
@@ -11,11 +10,11 @@ const DiscountCarousel = () => {
   const navigate = useNavigate();
 
   const handleStoreDiscountClick = () => {
-    navigate('/EmpDiscount');
+    navigate('/Empcourses-discount');
   };
 
   const handleCourseDiscountClick = () => {
-    navigate('/Empcourses-discount');
+    navigate('/EmpDiscount');
   };
 
   return (
