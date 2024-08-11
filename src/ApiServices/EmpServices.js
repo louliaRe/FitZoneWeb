@@ -61,31 +61,30 @@ export const updateCoach = async (id, data) => {
 export const getCourses = async (accessToken,id) =>{
     
     try{
-        const respons= await axios.get(`${API_URL}/classes/${id}`,{
+        const response= await axios.get(`${API_URL}/classes/${id}`,{
             headers:{
                 Authorization: `Bearer ${accessToken}`,
                
             },
 
         });
-        return respons.data;
+        console.log("courses",response)
+        return response.data;
     }catch(error){
         throw new Error(error.respons? error.respons.config: 'An error occured while getting courses')
     }
 
     }
 
-    export const addCourse = async (accessToken,data, id) =>{
+    export const addCourse = async (accessToken,formData, id) =>{
         try{
-            console.log("Course Data to be sent:", JSON.stringify(data, null, 2)); // Debugging log
+            console.log("Course Data to be sent:", JSON.stringify(formData)); // Debugging log
 
-            const respons= await axios.post(`${API_URL}/classes/${id}/`,{
+            const respons= await axios.post(`${API_URL}/classes/${id}/`,formData,{
                 headers:{
-                    Authorization: `Bearer ${accessToken}`,
+                    Authorization: `Bearer ${accessToken}`
                 },
-                //  params: {
-                //     'Branch-Id': id,
-                // },
+            
             });
             return respons.data;
         } catch (error) {

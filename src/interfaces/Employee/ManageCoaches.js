@@ -1,12 +1,13 @@
 import React,{useState, useEffect, useContext} from "react";
 import CoachesTable from "../../Components/Employee/CoachesTable";
 import { useDisclosure } from '@mantine/hooks';
-import { Button ,Modal,Container ,TextInput, PasswordInput, Select, MultiSelect, NumberInput} from "@mantine/core";
+import { LoadingOverlay,Box,Button ,Modal,Container ,TextInput, PasswordInput, Select, MultiSelect, NumberInput} from "@mantine/core";
 import classes from './ManageCoaches.module.css';
 import { DateInput } from "@mantine/dates";
 import {addCoach, getCoaches} from '../../ApiServices/EmpServices';
 import moment from "moment";
 import {useAuth} from '../../AuthContext';
+import Loading from '../../Components/Loading';
 
 const ManageCoaches=() => {
   const { authState } = useAuth();
@@ -17,26 +18,26 @@ const ManageCoaches=() => {
     const [newCoach, setNewCoach] = useState({username: '', Email: '', password: '', Description:'', days_off:[],shift:'',birth_date:'', start_date:'',allowPublicPosts:false,trainees:10 ,branch_id:authState.branch_id});
     const [coaches, setCoaches] = useState([]);
     const [errors, setErrors] = useState({});
-    
+    const [visible, { toggle }] = useDisclosure(true);
+
         console.log("AuthState in ManageCoaches:", authState);
 
 
-    useEffect(() => {
-      const fetchCoaches = async () => {
-          try {
+
+        useEffect(() => {
+          const fetchCoaches = async () => {
+            try {
               const data = await getCoaches(authState.accessToken, authState.branch_id);
               setCoaches(data);
-              console.log("get",data )
-
-          } catch (error) {
+              toggle();
+              // setLoading(true); 
+            } catch (error) {
               console.error("Error fetching coaches:", error.message);
-          }
-      };
-
-      
+              // setLoading(false); // Data loaded (even if there's an error)
+            }
+          };
           fetchCoaches();
-      
-  }, [authState]);
+        }, [authState]);
 
   console.log("coaches", coaches)
     const handleAddEmp = async (coach) => {
@@ -90,10 +91,23 @@ const ManageCoaches=() => {
       const handleSearch = (event) => {
         console.log(event.target.value);
       };
-     
+
+
+
+      // if (loading) {
+      //   return <Loading />;
+      // }else{
+    
 
       
     return(
+      <Box pos="relative">
+      <LoadingOverlay
+        visible={visible}
+        zIndex={1000}
+        overlayProps={{ radius: 'sm', blur: 2 }}
+        loaderProps={{ color: '#a1E533', type: 'bars' }}
+      />
         <Container>
         <div className="TB">
 
@@ -206,7 +220,8 @@ const ManageCoaches=() => {
         </div>
         <CoachesTable initdata={coaches}/>
       </Container>
-    )
-
-}
+      </Box>
+  );
+};
+// }
 export default ManageCoaches;

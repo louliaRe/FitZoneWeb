@@ -1,13 +1,16 @@
 // src/interfaces/ManageCourse.js
 import React, { useState, useEffect } from 'react';
-import { Button, Container,MultiSelect ,Grid, TextInput, Modal, FileInput,NumberInput ,Select} from '@mantine/core';
+import { LoadingOverlay,Button,Box ,Container,MultiSelect ,Grid, TextInput, Modal, FileInput,NumberInput ,Select} from '@mantine/core';
 import CourseCard from '../../Components/Employee/CourseCard';
 // import { useNavigate } from 'react-router-dom';
 import classes from './ManageCourse.module.css';
+import { useDisclosure } from '@mantine/hooks';
+
 import { DateInput, TimeInput } from '@mantine/dates';
 import { addCourse, getCourses, getCoaches } from '../../ApiServices/EmpServices';
 import {useAuth} from '../../AuthContext';
 import  moment  from 'moment';
+import Loading from '../../Components/Loading';
 // import useAxios from '../../Components/Axios';
 
 
@@ -17,7 +20,9 @@ const ManageCourse = () => {
   const [coaches, setCoaches] =useState([])
   const [search, setSearch] = useState('');
   const [error, setError]= useState('');
-  const [loading, setLoading]= useState(false);
+  const [loading, setLoading]= useState(true);
+  const [visible, { toggle }] = useDisclosure(true);
+
 
   const [courses, setCourses] = useState([
     {
@@ -40,12 +45,76 @@ const ManageCourse = () => {
     },
   ]);
 
-  const [newCourse, setNewCourse] = useState({ name: '', trainer_id: null,hall:null ,description: '', start_date: '',end_date:'', start_time: '',end_time:'' ,registration_fee:null,image: '', 
-  days_of_week:{},allowed_number_for_class:15 ,branch_id:authState.branch_id ,allowed_days_to_cancel:0 });
+  const [newCourse, setNewCourse] = useState({ name: '', trainer_id: null,hall:null ,description: '', start_date: '',end_date:'', start_time: '',end_time:'' ,registration_fee:null,image_path: null, 
+  days_of_week:{},allowed_number_for_class:15  ,allowed_days_to_cancel:0 });
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isNewModalOpen, setIsNewModalOpen] = useState(false);
   const [currentCourse, setCurrentCourse] = useState(null);
   const [newA, setNewA]= useState([]);
+
+ 
+  useEffect(() => {
+    const fetchCourses = async () => {
+      setLoading(true)
+      try {
+        const data = await getCourses(authState.accessToken, authState.branch_id);
+        console.log("co", courses)
+        setCourses(data);
+       
+      } catch (error) {
+        console.error('Error fetching courses:', error);
+      } finally {
+         // Set loading to false
+  
+      }
+    };
+
+    // if (authState.isAuthenticated) {
+    //   fetchCourses();
+    // }
+    fetchCourses();
+  }, [authState.accessToken]);
+
+  
+
+  
+  useEffect(() => {
+    const fetchCoaches = async () => {
+      console.log("hello")
+      toggle();
+        try {
+            const response = await getCoaches(authState.accessToken, authState.branch_id);
+           
+                console.log("resss", response)
+                setCoaches(response)
+        
+        } catch (error) {
+            console.error("Error fetching coaches:", error.message);
+            setError('Error fetching coaches');
+        } finally {
+            toggle(); // Set loading to false
+        }
+
+        
+    };
+    // if (authState.accessToken) {
+      fetchCoaches();
+  
+}, [authState.accessToken]);
+
+useEffect(() => {
+  const f_co = async () => {
+
+    setNewA(coaches.map(coach => ({
+      label: coach.user.username,
+      value: coach.id.toString()
+    })));
+  };
+  
+  f_co();
+  setLoading(false);
+}, [coaches]);
+
 
   const handleSearch = (e) => {
     setSearch(e.target.value);
@@ -72,21 +141,51 @@ const ManageCourse = () => {
     setIsNewModalOpen(true);
   };
 
+  const handleFileChange = (file) => {
+    if (file) {
+      setNewCourse({ ...newCourse, image_path: file });
+    }
+  };
   
  
   const handleSaveNew = async () => {
     try {
-      const formattedCourse = {
-        ...newCourse,
-        start_date: moment(newCourse.start_date).format('YYYY-MM-DD'),
-        end_date: moment(newCourse.end_date).format('YYYY-MM-DD'),
-      };
-      const addedCourse = await addCourse(authState.accessToken, formattedCourse, authState.id);
+      const formData = new FormData();
+
+   
+       
+       const start_date= moment(newCourse.start_date).format('YYYY-MM-DD');
+        const end_date= moment(newCourse.end_date).format('YYYY-MM-DD');
+   
+      if (newCourse.image_path) {
+        formData.append('image_path', newCourse.image_path);
+      }
+      formData.append('start_date',JSON.stringify(start_date))
+      formData.append('end_date',JSON.stringify(end_date))
+      formData.append('start_time',JSON.stringify(newCourse.start_time))
+      formData.append('end_time',JSON.stringify(newCourse.end_time))
+      formData.append('registration_fee',JSON.stringify(newCourse.registration_fee))
+      formData.append('hall', JSON.stringify(newCourse.hall))
+      formData.append('description',JSON.stringify( newCourse.description))
+      formData.append('trainer_id', JSON.stringify(newCourse.trainer_id))
+      formData.append('name', JSON.stringify(newCourse.name))
+      formData.append('allowed_number_for_class',JSON.stringify( newCourse.allowed_number_for_class))
+      formData.append('allowed_days_to_cancel',JSON.stringify( newCourse.allowed_days_to_cancel))
+      formData.append('days_of_week', JSON.stringify(newCourse.days_of_week))
+
+      console.log("formData", formData)
+
+      const formObject = Object.fromEntries(formData.entries());
+      console.log("form:", formObject);
+      
+      const addedCourse = await addCourse(authState.accessToken, formData, authState.branch_id);
       setCourses([...courses, addedCourse]);
       setIsNewModalOpen(false);
+      // setLoading(false);
     } catch (error) {
       if (error.status === 400) {
         alert('Please retry, there is something wrong.');
+        // setLoading(false);
       } else {
         console.error('Error adding new course:', error);
         alert('An error occurred. Please try again.');
@@ -94,6 +193,7 @@ const ManageCourse = () => {
     }
   };
  
+
     const handleChange = (e) => {
       console.log("eeeeeeeeiiiiiii", e)
       const { name, value } = e.target;
@@ -113,11 +213,9 @@ const ManageCourse = () => {
         console.log("dayIndex", dayIndex)
         if (dayIndex !== undefined) {
           setNewCourse((prevCourse) => ({
-            ...prevCourse,
             days_of_week: {
               ...prevCourse.days_of_week,
-              dayIndex:value,
-       
+              dayIndex: value,  // Use bracket notation to set the correct day
             },
           }));
         }
@@ -135,70 +233,6 @@ const ManageCourse = () => {
     };
     
 
-    
-
-  const handleFileChange = (e) => {
-    const { name, value } = e.target;
-   
-      setNewCourse ({ ...newCourse, [name]: value.files });
-   
-      
-  };
-
-  
-  useEffect(() => {
-    const fetchCourses = async () => {
-      try {
-        const data = await getCourses(authState.accessToken, authState.branch_id);
-        console.log("co", courses)
-        setCourses(data);
-      } catch (error) {
-        console.error('Error fetching courses:', error);
-      }
-    };
-
-    if (authState.isAuthenticated) {
-      fetchCourses();
-    }
-  }, [courses][authState]);
-
-  
-
-  
-  useEffect(() => {
-    const fetchCoaches = async () => {
-      console.log("hello")
-        // setLoading(true);
-        try {
-            const response = await getCoaches(authState.accessToken, authState.branch_id);
-           
-                console.log("resss", response)
-                setCoaches(response)
-        
-        } catch (error) {
-            console.error("Error fetching coaches:", error.message);
-            setError('Error fetching coaches');
-        } finally {
-            setLoading(false);
-        }
-
-        
-    };
-    if (authState.accessToken) {
-      fetchCoaches();
-  }
-}, [authState]);
-
-useEffect(() => {
-  const f_co = async () => {
-    setNewA(coaches.map(coach => ({
-      label: coach.user.username,
-      value: coach.id.toString()
-    })));
-  };
-
-  f_co();
-}, [coaches]);
 
 console.log("coaches inside", coaches)
 console.log("coaches id", coaches.map((coach)=> coach.id))
@@ -207,8 +241,20 @@ console.log("coaches id", coaches.map((coach)=> coach.id))
     
     //  
      console.log("new", newA)
+
+     if (loading) {
+      return <Loading />;
+    }else{
+  
      
   return (
+    <Box pos="relative">
+    <LoadingOverlay
+      visible={visible}
+      zIndex={1000}
+      overlayProps={{ radius: 'sm', blur: 2 }}
+      loaderProps={{ color: '#a1E533', type: 'bars' }}
+    />
     <Container >
       <div className={classes.header}>
         <h1>Manage Courses</h1>
@@ -298,9 +344,9 @@ console.log("coaches id", coaches.map((coach)=> coach.id))
             />
             <FileInput
               label="Image URL"
-              name="image"
+              name="image_path"
               value={currentCourse.image}
-              onChange={handleChange}
+              onChange={handleFileChange}
             />
             <Button color="green" onClick={handleSaveEdit} style={{ marginTop: '10px' }}>Save</Button>
           </div>
@@ -319,7 +365,7 @@ console.log("coaches id", coaches.map((coach)=> coach.id))
             label="Name"
             name="name"
             value={newCourse.name}
-            onChange={handleChange}
+            onChange={(e)=>handleChange(e)}
           />
           <Select
                 data={newA}
@@ -331,14 +377,14 @@ console.log("coaches id", coaches.map((coach)=> coach.id))
             label="Description"
             name="description"
             value={newCourse.description}
-            onChange={handleChange}
+            onChange={(e)=>handleChange(e)}
           />
            <NumberInput
               label="Max number of trainees"
               name="allowed_number_for_class"
               value= {newCourse.allowed_number_for_class}
-              onChange={(e)=>{handleChange({target:{name:'allowed_number_for_class', value:e}})}}/>
-
+              onChange={(e)=>handleChange(e)}
+/>
              <NumberInput
               label="Allow to cancel"
               description="you can cancel the registration after:"
@@ -366,16 +412,16 @@ console.log("coaches id", coaches.map((coach)=> coach.id))
               description="Start time"
               placeholder="Input placeholder"
               value={newCourse.start_time}
-              onChange={(e)=>handleChange(e,'start_time')}
-             />
+              onChange={(e)=>handleChange(e)}
+              />
 
             <TimeInput
             withSeconds
               label="End Time"
               name="end_time"
               value={newCourse.end_time}
-              onChange={handleChange}
-            />
+              onChange={(e)=>handleChange(e)}
+              />
              <MultiSelect
                label="Select the days"
                name='days_of_week'
@@ -398,15 +444,17 @@ console.log("coaches id", coaches.map((coach)=> coach.id))
             />
           <FileInput
             label="Image URL"
-            name="image"
-            value={newCourse.image}
-            onChange={(e)=>handleFileChange({name:'img', value:e})}
+            name="image_path"
+            value={newCourse.image_path}
+            onChange={handleFileChange}
           />
           <Button color="lime" onClick={handleSaveNew} style={{ marginTop: '10px' }}>Save</Button>
         </div>
       </Modal>
     </Container>
+    </Box>
   );
 };
+}
 
 export default ManageCourse;

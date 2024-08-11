@@ -36,7 +36,7 @@ export const GitHalls = async(accessToken,branchId) =>{
 
 export const getDisease = async (accessToken)=>{
     try{
-        const response = await axios.get(`${API_URL}diagram/disease/`, {
+        const response = await axios.get(`${API_URL}disease/`, {
             headers: {
                 Authorization: `Bearer ${accessToken}`,
             }})
@@ -67,12 +67,12 @@ export const getExercises = async (accessToken )=>{
 
   export const getAllMachines = async (accessToken )=>{
     try{
-        const response = await axios.get(`${API_URL}diagram/equipment/`, {
+        const response = await axios.get(`${API_URL}/diagram/equipment/`, {
             headers: {
                 Authorization: `Bearer ${accessToken}`,
             }})
             console.log("res of getting machines:", response.data.results)
-            return response.data.results ;
+            return response.data.results; 
     }catch(error){
         console.error("error getting machines",error);
         throw error;
@@ -169,3 +169,18 @@ export const UpdateDiagram= async (accessToken, hallId ,branch_id, data )=>{
       console.error("error updating machine", error)
     }
 }
+
+
+
+// export  const deleteMachine = async (accessToken, machineId )=>{
+//     try{
+//       const response= await axios.delete(`${API_URL}diagram/equipment/${machineId}/`,{
+//         headers:{
+//             Authorization: `Bearer ${accessToken}`
+//         }
+//       })
+//       console.log("delete machine", response.data)
+//     }catch(error){
+//       console.error("error deleting machine", error)
+//     }
+// }

@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Container, NumberInput, Modal, TextInput, FileInput, MultiSelect, Select } from '@mantine/core';
+import { Button, Container, NumberInput, Modal, TextInput, FileInput, MultiSelect, Select,Checkbox  } from '@mantine/core';
 import { getDisease, getExercises, getAllMachines, GetMachinesInside, AddMachine, AddMachineToCertainHall, UpdateDiagram, getMachineInfo } from '../../ApiServices/HallActivities';
 import { useAuth } from '../../AuthContext';
 import classes from '../../interfaces/Employee/ManageGymHall.module.css';
 
 const ManageMachines = ({ hall }) => {
+  const im = 'http://localhost:8000/'
     const { authState } = useAuth();
     const [machines, setMachines] = useState([]);
+    const [machinesIn, setMachinesIn] = useState([]);
+
     const [newMachine, setNewMachine] = useState({
       name: '',
+      status: false,
       description: '',
       video_path: '',
       exercises: [],
@@ -49,9 +53,10 @@ const ManageMachines = ({ hall }) => {
           const data = await getExercises(authState.accessToken);
           const formattedData = data.map(exercise => ({
             label: exercise.name,
-            value: exercise.id.toString()
+            value: exercise.exercise_id.toString()
           }));
-          setExercises(formattedData);
+          // setExercises(formattedData);
+          console.log("res of exercises:", data)
         } catch (error) {
           console.error('Error fetching exercises:', error);
         }
@@ -65,9 +70,10 @@ const ManageMachines = ({ hall }) => {
           const data = await getAllMachines(authState.accessToken);
           const formattedData = data.map(machine => ({
             label: machine.name,
-            value: machine.id.toString()
+            value: machine.equipment_id.toString()
           }));
           setMachines(formattedData);
+          console.log("res of machines:", data)
         } catch (error) {
           console.error('Error fetching machines:', error);
         }
@@ -87,14 +93,14 @@ const ManageMachines = ({ hall }) => {
               value: eq.Equipment_Diagram_id.toString(),
               label: eq.equipment_details.name,
             }));
-            setMachines(equipmentData);
+            setMachinesIn(equipmentData);
           } else {
             console.error('Unexpected response format:', response);
             setError('Unexpected response format');
           }
         } catch (error) {
-          console.error('Error fetching machines inside the hall:', error);
-          setError(`Error fetching machines inside the hall: ${error.message}`);
+          console.error('Error fetching machinesIN inside the hall:', error);
+          setError(`Error fetching machinesIN inside the hall: ${error.message}`);
         }
       };
       fetchMachinesInside();
@@ -135,7 +141,7 @@ const ManageMachines = ({ hall }) => {
         formData.append('name', newMachine.name || '');
         formData.append('description', newMachine.description || '');
         if (newMachine.video_path) {
-          formData.append('gif_path', newMachine.video_path);
+          formData.append('vedio_path', newMachine.video_path);
         }
   
         if (newMachine.diseases?.length) {
@@ -176,11 +182,11 @@ const ManageMachines = ({ hall }) => {
         };
     
   
-    const handleDeleteMachine = async (id) => {
+    const handleDeleteMachine = async (equipment_id) => {
       // to delete the machine 
-      console.log(`Deleting machine with id: ${id}`);
+      console.log(`Deleting machine with id: ${equipment_id}`);
       // update the state
-      setMachines(machines.filter(machine => machine.value !== id));
+      setMachines(machines.filter(machine => machine.value !== equipment_id));
       setIsModalOpen(false);
     };
   
@@ -222,8 +228,8 @@ const ManageMachines = ({ hall }) => {
           added_equipments: {}
         };
   
-        machines.forEach(machine => {
-          if (machine.id !== currentMachine.id) {
+        machinesIn.forEach(machineI => {
+          if (machineI.id !== currentMachine.id) {
             updatedMachineInfo.existed_equipments[machine.id] = {
               x_axis: machine.x_axis,
               y_axis: machine.y_axis,
@@ -251,7 +257,7 @@ const ManageMachines = ({ hall }) => {
         <div className={classes.hallGrid} style={{ gridTemplateColumns: `repeat(${hall.width}, 1fr)` }}>
           {Array.from({ length: hall.height }).map((_, y) =>
             Array.from({ length: hall.width }).map((_, x) => {
-              const machine = machines.find(m => m.x_axis === x && m.y_axis === y);
+              const machine = machinesIn.find(m => m.x_axis === x && m.y_axis === y);
               return (
                 <div
                   key={`${x}-${y}`}
@@ -272,11 +278,11 @@ const ManageMachines = ({ hall }) => {
           <h2>{currentMachine.equipment_details.name}</h2>
           <p><strong>Position:</strong> ({currentMachine.x_axis}, {currentMachine.y_axis})</p>
           <p><strong>Description:</strong> {currentMachine.equipment_details.description}</p>
-          {currentMachine.equipment_details.gifUrl && <img src={currentMachine.equipment_details.gifUrl} alt="Exercise GIF" />}
+          {currentMachine.equipment_details.image_path && <img className={classes.img} src={`${im}${currentMachine.equipment_details.image_path}`} alt="Exercise GIF" />}
           <Button color="yellow" onClick={() => handleEditMachine(currentMachine)} style={{ marginTop: '10px', marginRight: '10px' }}>
             Update
           </Button>
-          <Button color="red" onClick={() => handleDeleteMachine(currentMachine.id)} style={{ marginTop: '10px' }}>
+          <Button color="red" onClick={() => handleDeleteMachine(currentMachine.equipment_id)} style={{ marginTop: '10px' }}>
             Delete
           </Button>
         </div>
@@ -323,6 +329,11 @@ const ManageMachines = ({ hall }) => {
                 value={existingMachinePosition.y}
                 onChange={(value) => setExistingMachinePosition(prevState => ({ ...prevState, y: value }))}
               />
+               <Checkbox
+        label="Status"
+        checked={existingMachinePosition.status}
+        onChange={(event) => setExistingMachinePosition(prevState => ({ ...prevState, status: event.currentTarget.checked }))}
+      />
               {error && <div className={classes.error}>{error}</div>}
               <Button color="lime" onClick={handleSaveMachine} style={{ marginTop: '10px' }}>
                 Save
@@ -333,7 +344,9 @@ const ManageMachines = ({ hall }) => {
       )}
     </Modal>
   
-        <Button color="lime" onClick={() => setAddModalOpen(true)}>Add Machine</Button>
+        <Button color="lime" onClick={() => setAddModalOpen(true)}>Add New Machine</Button>
+        <Button color="lime" onClick={handleAddMachine}>Add Machine to the Hall</Button>
+
         <Modal opened={addModalOpen} onClose={() => setAddModalOpen(false)} title="Add New Machine" centered>
           <TextInput
             label="Name"
