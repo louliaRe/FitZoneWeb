@@ -33,8 +33,19 @@ import Branches from './interfaces/Branches';
 import DiscountCarousel from './Components/Employee/DiscountCarsouel';
 import ProductsTable from './Components/Employee/ProductsTable';
 import ManageProduct from './interfaces/Employee/ManageProducts';
-import TrainingPlan from './interfaces/Employee/TrainingPlan';
+import TrainingPlan from './Components/Employee/TrainingPlan';
 import ManageGym from './interfaces/Employee/ManageGym';
+import ClassesOffers from './interfaces/Employee/ClassesOffers';
+import StoreOffers from './interfaces/Employee/StoreOffers';
+import CatOffers from './interfaces/Employee/CatOffers';
+import CategoryOffersTable from './Components/Employee/CategoryOffersTable';
+import CatDiscount from './Components/Employee/CatDiscount';
+import ProductOffers from './interfaces/Employee/ProductOffers';
+import ProductDiscount from './Components/Employee/ProductDiscount';
+import ProductOffersTable from './Components/Employee/ProductOffersTable';
+import TrainingPlanPage from './interfaces/Employee/TrainingPlanPage';
+import RegistrationDiscount from './Components/Employee/RegistratinDiscount';
+import TrainingPlanDisplay from './Components/Employee/TrainingPlanDisplay';
 function App() {
   return (
     <MantineProvider
@@ -86,15 +97,32 @@ function App() {
                 <Route path="/EmpManage-courses" element={<ManageCourse />} />
                 {/* <Route path="/Empcourses-discount" element={<CoursesDiscountPage />} /> */}
                 <Route path="/EmpDiscountCarousel" element={<DiscountCarousel />} />
-
+                <Route path="/EmpClassesOffers" element={<ClassesOffers />} />
                 <Route path='/EmpDiscount' element={<Discount/>} />
+                <Route path='/EmpCatDiscount' element={<CatDiscount/>} />
+                <Route path='/EmpCatOffersTable' element={<CategoryOffersTable/>} />
+                <Route path='/EmpCatOffers' element={<CatOffers/>} />
+
+                <Route path='/EmpProductOffers' element={<ProductOffers/>} />
+                <Route path='/EmpProductDiscount' element={<ProductDiscount/>} />
+                <Route path='/EmpProductOffersTable' element={<ProductOffersTable/>} />
+
+               <Route path='/EmpRegistrationDiscount' element={<RegistrationDiscount/>} />
+
                 <Route path='/EmpAddCategory' element={<AddCat/>} />
                 <Route path='/EmpDisplayItem' element={<DisplayItem/>} />
                 <Route path='/EmpAddItem' element={<AddItem/>} />
                 <Route path='/EmpClothesForm' element={<ClothesForm/>} />
                 <Route path='/EmpMealsForm' element={<MealsForm/>} />
                 <Route path='/EmpSupplementForm' element={<SupplementsForm/>} />
+
+
+                <Route path='/EmpTrainingPlanPage' element={<TrainingPlanPage/>}/>
                 <Route path='/EmpTrainingPlan' element={<TrainingPlan/>}/>
+                <Route path='/EmpTrainingPlanDisplay' element={<TrainingPlanDisplay/>} />
+
+                <Route path='/EmpStoreOffers' element={<StoreOffers/>} />
+
                 
               </Routes>
             </AppShell.Main>
