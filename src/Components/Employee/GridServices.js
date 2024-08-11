@@ -27,7 +27,7 @@ const GridServices = () => {
         navigate('/EmpDiscountCarousel');
         break;
         case 'plan':
-        navigate('/EmpTrainingPlan');
+        navigate('/EmpTrainingPlanPage');
         break;
       default:
         break;

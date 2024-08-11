@@ -38,29 +38,30 @@ const MealsForm = () => {
     try {
       const formData = new FormData();
 
-      const sm= {
+      
 
-       product : {
+      const product = {
         name: newMeal.name,
         description: newMeal.description,
         category: 2,
         brand: newMeal.brand
-      },
+      }
 
-       meals : {
+      const  meals = {
         protien: newMeal.protien,
         carbs: newMeal.carbs,
         calories: newMeal.calories,
         used_for: newMeal.used_for
-      },
-
-      details : {
+      }
+      const  details = {
         amount: newMeal.amount,
         price: newMeal.price
       }
-    }
+    
 
-      formData.append('request', JSON.stringify(sm));
+      formData.append('product', JSON.stringify(product));
+      formData.append('meals', JSON.stringify(meals));
+      formData.append('details', JSON.stringify(details));
     
 
       if (newMeal.image_path) {
