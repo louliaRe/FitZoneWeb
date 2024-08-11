@@ -1,5 +1,5 @@
-import React, { useState,useEffect } from "react";
-import { NumberInput, MultiSelect, Select,Container, Button, Text } from "@mantine/core";
+import React, { useState, useEffect } from "react";
+import { NumberInput, Select, Container, Button } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
 import { useAuth } from "../../AuthContext";
 import classes from './Discount.module.css';
@@ -7,7 +7,7 @@ import { classOffer, getCourses } from "../../ApiServices/OffersServices";
 import moment from "moment";
 
 const Discount = () => {
-    const {authState}= useAuth();
+    const { authState } = useAuth();
     const [selectedItems, setSelectedItems] = useState(0);
     const [courses, setCourses] = useState([]);
     const [amount, setAmount] = useState(null);
@@ -15,73 +15,68 @@ const Discount = () => {
     const [endDate, setEndDate] = useState(null);
     const [errors, setErrors] = useState({});
 
-    useEffect(()=>{
-        const res= async()=>{
-            try{
-            const data = await getCourses(authState.accessToken, authState.branch_id);
-            console.log("dat:", data);
-            const formattedData = data.map(course=>({
-                label: course.name,
-                value: course.class_id.toString()
-            }));
-            setCourses(formattedData)
-            }catch(e){
+    useEffect(() => {
+        const res = async () => {
+            try {
+                const data = await getCourses(authState.accessToken, authState.branch_id);
+                console.log("dat:", data);
+                const formattedData = data.map(course => ({
+                    label: course.name,
+                    value: course.schedule.map(sc => sc.class_scheduel_id).toString()
+                }));
+                setCourses(formattedData)
+            } catch (e) {
                 console.log("error:", e);
             }
         };
         res();
-    },[authState.accessToken])
+    }, [authState.accessToken])
 
     const handleAddDiscount = async () => {
-        try{
-        console.log("selc:", selectedItems)
-        console.log("date:", startDate)
-        console.log("amount:", amount)
+        try {
+            console.log("selc:", selectedItems)
+            console.log("date:", startDate)
+            console.log("amount:", amount)
 
-        let formErrors = {};
+            let formErrors = {};
 
-        if (!startDate) {
-            formErrors.startDate = 'Start date is required';
-        }
+            if (!startDate) {
+                formErrors.startDate = 'Start date is required';
+            }
 
-        if (!endDate) {
-            formErrors.endDate = 'End date is required';
-        } else if (endDate < startDate) {
-            formErrors.endDate = 'End date cannot be before start date';
-        }
+            if (!endDate) {
+                formErrors.endDate = 'End date is required';
+            } else if (endDate < startDate) {
+                formErrors.endDate = 'End date cannot be before start date';
+            }
 
-        if (amount === null || amount <= 0) {
-            formErrors.amount = 'Amount must be greater than 0';
-        }
+            if (amount === null || amount <= 0) {
+                formErrors.amount = 'Amount must be greater than 0';
+            }
 
-        setErrors(formErrors);
+            setErrors(formErrors);
 
-        if (Object.keys(formErrors).length === 0) {
-            
-            const formatStartDate = moment(startDate).format("YYYY-MM-DD");
-            const formatEndDate = moment(endDate).format("YYYY-MM-DD");
+            if (Object.keys(formErrors).length === 0) {
 
+                const formatStartDate = moment(startDate).format("YYYY-MM-DD");
+                const formatEndDate = moment(endDate).format("YYYY-MM-DD");
 
-                const data={
+                const data = {
                     start_date: formatStartDate,
                     end_date: formatEndDate,
-                    offer_data:{
+                    offer_data: {
                         percentage_cut: amount,
-                        calss_id: selectedItems
+                        class_id: selectedItems
                     }
                 }
-          const createOffer= await classOffer( authState.accessToken,authState.branch_id, data );
-          console.log("res",createOffer);
+                const createOffer = await classOffer(authState.accessToken, authState.branch_id, data);
+                console.log("res", createOffer);
+                alert(createOffer)
             }
-            }catch(e){
-                console.log("error",e);
-
-            }
-        };
-            
-    
-
-    
+        } catch (e) {
+            console.log("error", e);
+        }
+    };
 
     return (
         <Container className={classes.con}>
@@ -89,7 +84,7 @@ const Discount = () => {
             <Select
                 label="Select the item"
                 data={courses}
-                onChange={setSelectedItems}
+                onChange={(value) => setSelectedItems(parseInt(value, 10))}
                 searchable
                 required
                 error={errors.selectedItems}

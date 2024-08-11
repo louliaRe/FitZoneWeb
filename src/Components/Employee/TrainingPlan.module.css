@@ -1,0 +1,45 @@
+.con {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 2rem;
+    width: 600px;
+    /* background-color: #2e2d2d; */
+    border-radius: 8px;
+    color: #fff;
+    box-shadow: 0 2px 4px #a1E533;
+  }
+  .fields{
+    width: 100%;
+  }
+  .workout {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+    background-color: #2e2d2d;
+    color: #fff;
+    padding: 1rem;
+    border: lime ;
+    border-radius: 8px ;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+  }
+  
+  .exercise {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    background-color: #2e2d2d;
+    color: #fff;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+  }
+  
+  .btn {
+    align-self: flex-start;
+    margin-top: 1rem;
+  }
+  
