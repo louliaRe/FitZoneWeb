@@ -1,20 +1,22 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Carousel } from '@mantine/carousel';
-import { Container, Button, Image } from '@mantine/core';
+import { Container, Button, Image,Modal } from '@mantine/core';
 
-import classes from './DiscountCarousel.module.css'; // Import your custom CSS for styling
+import classes from './DiscountCarousel.module.css'; 
 import '@mantine/carousel/styles.css';
 
 const DiscountCarousel = () => {
+  const [opened, setOpened] = useState(false);
+
   const navigate = useNavigate();
 
   const handleStoreDiscountClick = () => {
-    navigate('/Empcourses-discount');
+    navigate('/EmpStoreOffers');
   };
 
   const handleCourseDiscountClick = () => {
-    navigate('/EmpDiscount');
+    navigate('/EmpClassesOffers');
   };
 
   return (
@@ -32,7 +34,7 @@ const DiscountCarousel = () => {
       <Carousel.Slide className={classes.carouselItem} onClick={handleStoreDiscountClick}>
         <div className={classes.imageContainer}>
           <Image src="./Dstore.jpg" className={classes.img} />
-          <Button className={classes.buttonOverlay} color="lime">Discount on the Store</Button>
+          <Button className={classes.buttonOverlay} color="lime">Discount on the Store </Button>
         </div>
       </Carousel.Slide>
       <Carousel.Slide className={classes.carouselItem} onClick={handleCourseDiscountClick}>
@@ -41,7 +43,17 @@ const DiscountCarousel = () => {
           <Button className={classes.buttonOverlay} color="lime">Discount on Courses</Button>
         </div>
       </Carousel.Slide>
+      <Carousel.Slide className={classes.carouselItem} onClick={() => setOpened (true)} >
+        <div className={classes.imageContainer}>
+          <Image src="./registrationOf.jpg" className={classes.img} />
+          <Button  
+           className={classes.buttonOverlay} 
+           color="lime" 
+           onClick={() =>navigate('/EmpRegistrationDiscount')}>Rejistration Offer</Button>
+        </div>
+      </Carousel.Slide>
     </Carousel>
+   
   </Container>
 );
 };

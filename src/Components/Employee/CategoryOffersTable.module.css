@@ -1,0 +1,20 @@
+.tablee {
+    justify-content: center;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    background-color: 
+    #2e2d2d;
+    color: antiquewhite;
+  }
+
+  .head{
+   color: #a1E533;
+   font-weight: bold;
+   font-size: medium;
+  }
+ .submit{
+    margin-top: 10px;
+    margin-left: 35% !important;
+ }
+  

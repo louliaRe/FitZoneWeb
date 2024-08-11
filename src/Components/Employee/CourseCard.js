@@ -1,12 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, Image, Text, Button, Group, Modal, TextInput } from '@mantine/core';
 import classes from './CourseCard.module.css';
 import { DateInput, TimeInput } from '@mantine/dates';
+import Loading from '../Loading';
 
 const CourseCard = ({ course, onEdit, onDelete }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editedCourse, setEditedCourse] = useState({ ...course, dates: new Date(course.dates), times: new Date(course.times) });
+const [loading, setLoading] = useState (false)
 
+
+useEffect (() => {
+  console.log (course)
+}, )
+  console.log("course inside card", course)
   const handleEdit = () => {
     setIsModalOpen(true);
   };
@@ -31,10 +38,17 @@ const CourseCard = ({ course, onEdit, onDelete }) => {
           <Text className={classes.name}>{course.name}</Text>
         </Group>
 
-        <Text size="sm">Coach: {course.coachName}</Text>
-        <Text size="sm">Duration: {course.duration}</Text>
-        <Text size="sm">Dates: {new Date(course.dates).toLocaleDateString()}</Text>
-        <Text size="sm">Times: {new Date(course.times).toLocaleTimeString()}</Text>
+        <Text size="sm">Coach: {course.schedule && Array.isArray(course.schedule)
+          ? course.schedule.map((co) => co.trainer.employee.user.username).join(', ')
+          : "No schedule available"}</Text>
+        <Text size="sm">Duration: <bold style={{color:'#a1E533'}}>from:</bold> {course.schedule && Array.isArray(course.schedule)
+          ?course.schedule.map((co) => co.start_time).join(','): "No schedule available"}  <bold style={{color:'#a1E533'}}>to: </bold>{course.schedule && Array.isArray(course.schedule)
+          ?course.schedule.map((co)=> co.end_time).join(','):"No schedule available "} </Text>
+        <Text size="sm">Dates: <bold style={{color:'#a1E533'}}>from:</bold> {course.schedule && Array.isArray(course.schedule)
+          ?course.schedule.map((co) => co.start_time).join(','): "No schedule available"}  <bold style={{color:'#a1E533'}}>to: </bold>{course.schedule && Array.isArray(course.schedule)
+            ?course.schedule.map((co) => co.start_date).join(','): "No date available"}  <bold style={{color:'#a1E533'}}>to: </bold>{course.schedule && Array.isArray(course.schedule)?course.schedule.map((co) => co.end_date).join(',') : "No available date"}</Text>
+        <Text size="sm">Registration: {course.schedule && Array.isArray(course.schedule)
+          ?course.schedule.map((co) => co.registration_fee).join(','): "No schedule available"}</Text>
 
         <Group className={classes.group}>
           <Button onClick={handleEdit} color="lime">Edit</Button>

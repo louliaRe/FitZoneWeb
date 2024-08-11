@@ -1,0 +1,86 @@
+.container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: auto;
+  }
+  
+  .workoutCard {
+    background-color: #f8f9fa;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .workoutCard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  .title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #333;
+  }
+  
+  .badge {
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 5px;
+    padding: 5px 10px;
+  }
+  
+  .badgeWorkout {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .badgeRest {
+    background-color: #28a745;
+    color: white;
+  }
+  
+  .list {
+    margin-top: 15px;
+  }
+  
+  .listItem {
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .textSmall {
+    font-size: 14px;
+    color: #555;
+  }
+  
+  .textMedium {
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+  }
+  
+  .textLarge {
+    font-size: 18px;
+    font-weight: 600;
+    color: #111;
+  }
+  
+  .divider {
+    margin: 20px 0;
+    height: 2px;
+    background-color: #e9ecef;
+  }
+  
+  .group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
