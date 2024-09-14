@@ -1,0 +1,23 @@
+.table {
+  width: 1000px;
+  justify-content: center;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+    background-color:  #2e2d2d !important;
+    /* background-color: 
+    #2e2d2d; */
+    color: antiquewhite !important;
+  }
+
+  .head{
+   color: #a1E533;
+   font-weight: bold;
+   font-size: medium;
+  }
+  
+  .btn{
+    margin-left: 30%;
+    margin-top: 15px;
+    background-color: #a1E533 !important ;
+  }
