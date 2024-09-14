@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { Container, Button } from "@mantine/core";
+import { Container, Button, Loader } from "@mantine/core";
 import { getClassOffers } from "../../ApiServices/OffersServices";
 import OffersTable from "../../Components/Employee/OffersTable";
 import classes from './ClassesOffers.module.css';
 import { useAuth } from "../../AuthContext";
 import { useNavigate } from "react-router-dom";
 
+
+
 const ClassesOffers = () => {
     const [data, setData] = useState([]);
     const [search, setSearch] = useState("");
+    const [loading, setLoading]= useState(true)
     const navigate = useNavigate();
     const { authState } = useAuth();
  
@@ -17,9 +20,11 @@ const ClassesOffers = () => {
             try {
                 const offer = await getClassOffers(authState.accessToken, authState.branch_id);
                 console.log("res of get offers:", offer);
-                setData(offer); // assuming offer contains the data you want to set
+                setData(offer); 
+                setLoading(false);
             } catch (e) {
                 console.log("error", e);
+
             }
         };
         res();
@@ -32,6 +37,10 @@ const ClassesOffers = () => {
     const handleSearch = (event) => {
         setSearch(event.target.value);
     };
+
+    if(loading){
+        return <Loader color="lime" type="dots" />;
+    }
 
     return (
         <Container>
