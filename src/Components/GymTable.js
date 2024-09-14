@@ -191,6 +191,7 @@ const GymsCard = ({ initdata }) => {
         </div>
         <form onSubmit={(e) => { e.preventDefault(); handleAddBranch(newBranch); }}>
           <TextInput label="Address" name="address" value={newBranch.address} onChange={(e) => setNewBranch({ ...newBranch, address: e.target.value })} required />
+          {/* CITY, STREET, NUMBER_OF_CLIENT_ALLOWED */}
           <Radio.Group name="has_store" label="Has Store" onChange={(value) => setNewBranch({ ...newBranch, has_store: value === 'true' })}>
             <Group mt="xs">
               <Radio value="true" label="Yes" />
