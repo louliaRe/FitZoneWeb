@@ -72,7 +72,7 @@ const CatDiscount = () => {
                 }
                 const createOffer = await addCategoryOffersPer(authState.accessToken, authState.branch_id, data);
                 console.log("res", createOffer);
-                alert("res", createOffer.message);
+                alert(createOffer.message);
 
             }
         } catch (e) {
