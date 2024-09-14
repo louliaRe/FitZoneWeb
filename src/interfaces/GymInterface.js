@@ -11,7 +11,7 @@ const registration_feeArray=[{ type: 'daily', fee: 0 }, { type: 'monthly', fee: 
 const GymInterface = () => {
   const [gyms, setGyms] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
-  const [newGym, setNewGym] = useState({ name: '', description: '', img: null, has_store: false, allow_retrival: false, days: null,allow_public_posts: false,allowed_days_for_registraiton_cancellation:false,number_of_clients_allowed:100,duration_allowed: 0, cut_percentage: 0, openHour: '', closeHour: '', womanStartHour: '', womanEndHour: '', manager: '', manager_username: '',
+  const [newGym, setNewGym] = useState({ name: '', description: '', img: null, has_store: false, allow_retrival: false, days: null,allow_public_posts: false,allowed_days_for_registraiton_cancellation:false,number_of_clients_allowed:100,allow_public_posts:false,allow_public_products:false,duration_allowed: 0, cut_percentage: 0, openHour: '', closeHour: '', womanStartHour: '', womanEndHour: '', manager: '', manager_username: '',
    password: '', managerGender: false, birthday: null , 
    registration_fee: [{ type: 'daily', fee: 0}, { type: 'monthly', fee: 0 }]
 });
@@ -71,6 +71,7 @@ const GymInterface = () => {
           }
         ],
         registration_fee: gym.registration_fee
+        // في تعديل لانو صار رح يوصلو ضمن الفورم وبقلبا json
       };
       
      await addGym(gymData);
@@ -307,6 +308,7 @@ const GymInterface = () => {
                         onChange={(value) => handleChange({ target: { name: 'allowed_days_for_registraiton_cancellation', value } })}
                   
                       />
+                      {/* ALLOW PUBLIC POST, ALLOW PUBLIC PRODUCTS */}
                           
 
 
