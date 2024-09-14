@@ -1,7 +1,8 @@
 import React from 'react';
 import { PieChart } from '@mantine/charts';
 import { Card, Title } from '@mantine/core';
-import './AdminStatistics.css';
+import '@mantine/charts/styles.css';
+import classes from './AdminStatistics.module.css';
 
 const AdminStatistics = () => {
   const data = [
@@ -12,9 +13,9 @@ const AdminStatistics = () => {
   ];
 
   return (
-    <Card shadow="xl" padding="lg" className="card">
-      <Title className="text">Statistics</Title>
-      <PieChart withLabelsLine labelsPosition="inside" labelsType="percent" withLabels data={data} />
+    <Card shadow="xl" padding="lg" className={classes.cardd}>
+      <Title className={classes.text}>Statistics</Title>
+      <PieChart withLabelsLine labelsPosition="inside" labelsType="percent" withLabels data={data} size={300}/>
     </Card>
   );
 };
