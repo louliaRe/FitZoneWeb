@@ -10,6 +10,8 @@ const ClothesForm = () => {
     name: '',
     price: 0,
     image: null,
+    brand:'',
+    description:'',
     colors: [],
     colorDetails: {}
   });
@@ -18,8 +20,15 @@ const ClothesForm = () => {
     setClothes({ ...clothes, name: e.target.value });
   };
 
+  const handleDescriptionChange = (e) => {
+    setClothes({ ...clothes, description: e.target.value });
+  };
+
   const handlePriceChange = (e) => {
     setClothes({ ...clothes, price: e.target.value });
+  };
+  const handlebrandChange = (e) => {
+    setClothes({ ...clothes, brand: e.target.value });
   };
 
   const handleFileChange = (file) => {
@@ -59,16 +68,29 @@ const ClothesForm = () => {
     setClothes({ ...clothes, colorDetails: updatedColorDetails });
   };
 
-  const formatDetails = () => {
-    const details = {};
+  const formatAcc = () => {
+    const details = [];
+  
     Object.entries(clothes.colorDetails).forEach(([color, { sizes, amounts }]) => {
-      details[color] = sizes.map(size => ({
-        size,
-        amount: amounts[size] || 0
-      }));
+      sizes.forEach(size => {
+        details.push({
+          color: color,
+          size: size,
+          amount: amounts[size] || 0
+        });
+      });
     });
+  
     return details;
   };
+  
+  const det= {
+    price: Number(clothes.price),
+    amount: Object.values(formatAcc()).flat().reduce((acc, item) => acc + item.amount, 0), // Total amount
+
+
+
+  }
 
   const handleSubmit = async () => {
     try {
@@ -76,17 +98,19 @@ const ClothesForm = () => {
 
       const product = {
         name: clothes.name,
-        price: Number(clothes.price),
-        amount: Object.values(formatDetails()).flat().reduce((acc, item) => acc + item.amount, 0), // Total amount
         is_available: true,
         product_type: 'accessories',
-        image_path: clothes.image ? clothes.image.name : null
+        category:3,
+        description: clothes.description,
+        brand: clothes.brand,
       };
 
-      const details = formatDetails();
+      const accessor = formatAcc();
+
 
       formData.append('product', JSON.stringify(product));
-      formData.append('details', JSON.stringify(details));
+      formData.append('accessory', JSON.stringify(accessor));
+      formData.append('details', JSON.stringify(det)); 
 
       if (clothes.image) {
         formData.append('image_path', clothes.image, clothes.image.name);
@@ -95,7 +119,9 @@ const ClothesForm = () => {
 
       console.log('FormData:', Array.from(formData.entries()));
 
-      await AddAccessories(authState.accessToken, authState.branch_id, formData);
+      const res= await AddAccessories(authState.accessToken, authState.branch_id, formData);
+
+      alert(res.message)
     } catch (error) {
       console.error('Error saving clothes item:', error);
       alert('Failed to save clothes item. Please try again later.');
@@ -105,7 +131,10 @@ const ClothesForm = () => {
   return (
     <div className={classes.form}>
       <TextInput label="Name" name="name" value={clothes.name} onChange={handleNameChange} />
+      <TextInput label="Description" name="description" type="text" value={clothes.description} onChange={handleDescriptionChange} />
+
       <TextInput label="Price" name="price" type="number" value={clothes.price} onChange={handlePriceChange} />
+      <TextInput label="Brand" name="brand" type="text" value={clothes.brand} onChange={handlebrandChange} />
       <FileInput label="Image URL" name="image" onChange={handleFileChange} />
       <MultiSelect
         label="Colors"

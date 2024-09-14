@@ -24,6 +24,7 @@ const SupplementsForm = () => {
 
   const handleSubmit = async () => {
     console.log('Supplement item saved:', supplement);
+  
       try{
            const formData=  new FormData();
            const product = {
@@ -49,7 +50,7 @@ const SupplementsForm = () => {
           };
            
           formData.append('product', JSON.stringify(product));
-          formData.append('supp_data', JSON.stringify(supp_data));
+          formData.append('supplements', JSON.stringify(supp_data));
           formData.append('details', JSON.stringify(details));
           
           if (supplement.image_path) {
@@ -58,10 +59,17 @@ const SupplementsForm = () => {
           // formData.append('supplement', JSON.stringify(supplement));
           console.log("formData",  formData);
 
-          await AddSupplement(authState.accessToken, authState.branch_id, formData)
+          const res=  await AddSupplement(authState.accessToken, authState.branch_id, formData);
+
+      
+
+          console.log("res", res);
+          alert(res.message);
+     
 
       }catch(error){
-         console.error("error", error)
+         console.error("error", error.message);
+         alert(error.message);
       }
   };
 
@@ -105,12 +113,12 @@ const SupplementsForm = () => {
         onChange={(e)=>handleChange({target:{name:'weight',value:e}})}/>
  
       <TextInput label="Flavor" name="flavor" value={supplement.flavor} onChange={handleChange} />
-      <NumberInput
+      {/* <NumberInput
         label="Price"
         name="price"
         value={supplement.price}
         onChange={(value) => handleNumberChange('price', value)}
-      />
+      /> */}
 
       <FileInput label="Image URL" name="image_path"  value={supplement.image} onChange={handleFileChange} />
       <Button onClick={handleSubmit} className={classes.btn}>Save</Button>

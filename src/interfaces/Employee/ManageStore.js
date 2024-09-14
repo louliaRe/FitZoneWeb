@@ -35,13 +35,7 @@ const ManageStore = () => {
             <CategoryCard category={category} />
         ))}
 
-     <Card shadow="sm" padding="lg" className={classes.card}onClick={() => navigate('/AddCategory')}>
-        <Card.Section>
-          <Text  size="lg" style={{ marginTop: '10px', textAlign: 'center' }}>
-            Add New Category
-          </Text>
-        </Card.Section>
-        </Card>
+    
       </div>
      
     </Container>

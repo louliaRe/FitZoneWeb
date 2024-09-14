@@ -35,6 +35,52 @@ export const fetchProducts= async (accessToken, branch_id, categoryId)=>{
   }
 };
 
+export const fetchMeals = async (accessToken, branch_id)=>{
+  try{ 
+    const response = await axios.get(`${API_URL}store/product/meals/${branch_id}`,{
+          headers:{
+            Authorization: `Bearer ${accessToken}`
+          }
+        });
+        console.log("res of fetchMeals:", response.data);
+        return response.data;
+
+  }catch(error){
+      console.error('error in fetching meals', error)
+            throw error;
+  }
+}
+export const fetchAccessories = async (accessToken, branch_id)=>{
+  try{ 
+    const response = await axios.get(`${API_URL}store/product/accessories/${branch_id}`,{
+          headers:{
+            Authorization: `Bearer ${accessToken}`
+          }
+        });
+        console.log("res of fetchAcc:", response.data);
+        return response.data;
+
+  }catch(error){
+      console.error('error in fetching acc', error)
+            throw error;
+  }
+}
+export const fetchSupplement = async (accessToken, branch_id)=>{
+  try{ 
+    const response = await axios.get(`${API_URL}store/product/supplements/${branch_id}`,{
+          headers:{
+            Authorization: `Bearer ${accessToken}`
+          }
+        });
+        console.log("res of FetchSupp:", response.data);
+        return response.data;
+
+  }catch(error){
+      console.error('error in fetching Supp', error)
+            throw error;
+  }
+}
+
 // export const updateProduct = async(accessToken, branch_id, data) =>{
 //   try {
 //     const response = await axios.put(`${API_URL}store/product/${branch_id}`, data,{
@@ -90,9 +136,11 @@ export const AddSupplement = async(accessToken,branch_id,supplement)=>{
 
       }
     } )
-    console.log("response of adding sup: ", response);  
+    console.log("response of adding sup: ", response); 
+    return response.data;
   }catch(error){
-    console.error('error adding sup:', error)
+    console.error('error adding sup:', error.message)
+    throw(error)
   }
 } 
 
@@ -107,7 +155,8 @@ export const AddAccessories = async(accessToken,branch_id,formData)=>{
 
       }
     } )
-    console.log("response of adding accessories: ", response);  
+    console.log("response of adding accessories: ", response);
+    return   response.data;
   }catch(error){
     console.error('error adding accessories:', error)
   }
@@ -131,6 +180,7 @@ export const fetchProductinsideSys = async (accessToken, branch_id, categoryId) 
 }
 
 export const EditProduct = async (accessToken, branch_product_id, data)=>{
+  console.log('edit product data send L', data);
   try{
      const response = await axios.put(`${API_URL}store/product/${branch_product_id}/`,data,{
       headers:{
