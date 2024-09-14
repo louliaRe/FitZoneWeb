@@ -46,6 +46,9 @@ import ProductOffersTable from './Components/Employee/ProductOffersTable';
 import TrainingPlanPage from './interfaces/Employee/TrainingPlanPage';
 import RegistrationDiscount from './Components/Employee/RegistratinDiscount';
 import TrainingPlanDisplay from './Components/Employee/TrainingPlanDisplay';
+import VouchersInterface from './interfaces/VouchersInterface';
+import PointsInterface from './interfaces/PointsInterface';
+import Point from './Components/Point';
 function App() {
   return (
     <MantineProvider
@@ -78,6 +81,9 @@ function App() {
                 {/* Admin */}
                 <Route path="/admin" element={<MainAdminP />} />
                 <Route path='/GymInterface' element={<GymInterface />} />
+                <Route path='/Vouchers' element={<VouchersInterface />} />
+                <Route path='/Points' element={<Point />} />
+
 
                 {/* Manager */}
                 <Route path='/ManagerInterface' element={<Managerinterface/>} />
