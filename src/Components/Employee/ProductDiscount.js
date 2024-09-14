@@ -21,11 +21,12 @@ const ProductDiscount = () => {
         const res = async () => {
             try {
                 const data = await getProducts(authState.accessToken, authState.branch_id);
-                console.log("dat:", data);
+                console.log("prod:", data);
                 const formattedData = data.map(pro => ({
                     label: pro.product.name,
-                    value: pro.product.id.toString()
+                    value: pro.branch_product_id.toString()
                 }));
+                console.log("formaT", formattedData);
                 setProducts(formattedData)
             } catch (e) {
                 console.log("error:", e);
@@ -117,7 +118,7 @@ const ProductDiscount = () => {
             <Select
                 label="Select the item"
                     data={products}
-                onChange={(value) => setSelectedItems(parseInt(value, 10))}
+                onChange={(value) => handleSelectChange(parseInt(value, 10))}
                 searchable
                 required
                 error={errors.selectedItems}
