@@ -156,22 +156,29 @@ useEffect(() => {
        
        const start_date= moment(newCourse.start_date).format('YYYY-MM-DD');
         const end_date= moment(newCourse.end_date).format('YYYY-MM-DD');
+
+          const schedule = [{
+         
+            start_time: (newCourse.start_time),
+            end_time:(newCourse.end_time),
+            hall: (newCourse.hall),
+            trainer_id: (newCourse.trainer_id),
+            allowed_number_for_class: (newCourse.allowed_number_for_class),
+            allowed_days_to_cancel: (newCourse.allowed_days_to_cancel),
+            start_date: (start_date),
+            end_date: (end_date),
+            days_of_week:(newCourse.days_of_week)
+        }];
+        
    
       if (newCourse.image_path) {
         formData.append('image_path', newCourse.image_path);
       }
-      formData.append('start_date',JSON.stringify(start_date))
-      formData.append('end_date',JSON.stringify(end_date))
-      formData.append('start_time',JSON.stringify(newCourse.start_time))
-      formData.append('end_time',JSON.stringify(newCourse.end_time))
-      formData.append('registration_fee',JSON.stringify(newCourse.registration_fee))
-      formData.append('hall', JSON.stringify(newCourse.hall))
-      formData.append('description',JSON.stringify( newCourse.description))
-      formData.append('trainer_id', JSON.stringify(newCourse.trainer_id))
+      
       formData.append('name', JSON.stringify(newCourse.name))
-      formData.append('allowed_number_for_class',JSON.stringify( newCourse.allowed_number_for_class))
-      formData.append('allowed_days_to_cancel',JSON.stringify( newCourse.allowed_days_to_cancel))
-      formData.append('days_of_week', JSON.stringify(newCourse.days_of_week))
+      formData.append('registration_fee',JSON.stringify(newCourse.registration_fee))
+      formData.append('description',JSON.stringify( newCourse.description))
+      formData.append('schedule', JSON.stringify(schedule))
 
       console.log("formData", formData)
 
@@ -182,55 +189,57 @@ useEffect(() => {
       setCourses([...courses, addedCourse]);
       setIsNewModalOpen(false);
       // setLoading(false);
+      console.log(addedCourse.message)
     } catch (error) {
       if (error.status === 400) {
-        alert('Please retry, there is something wrong.');
-        // setLoading(false);
+        alert('Please retry, there is something wrong.', error);
       } else {
         console.error('Error adding new course:', error);
-        alert('An error occurred. Please try again.');
+        alert('An error occurred. Please try again.', error);
       }
     }
   };
  
 
-    const handleChange = (e) => {
-      console.log("eeeeeeeeiiiiiii", e)
-      const { name, value } = e.target;
-     
-      if (name === 'days_of_week') {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    
+    if (name === 'days_of_week') {
+      const daysOfWeekMapping = {
+        sunday: 0,
+        monday: 1,
+        tuesday: 2,
+        wednesday: 3,
+        thursday: 4,
+        friday: 5,
+        saturday: 6,
+      };
 
-        const daysOfWeekMapping = {
-          sunday: 0,
-          monday: 1,
-          tuesday: 2,
-          wednesday: 3,
-          thursday: 4,
-          friday: 5,
-          saturday: 6,
-        };
-        const dayIndex = daysOfWeekMapping[value];
-        console.log("dayIndex", dayIndex)
+      const updatedDays = value.reduce((acc, day) => {
+        const dayIndex = daysOfWeekMapping[day.toLowerCase()];
         if (dayIndex !== undefined) {
-          setNewCourse((prevCourse) => ({
-            days_of_week: {
-              ...prevCourse.days_of_week,
-              dayIndex: value,  // Use bracket notation to set the correct day
-            },
-          }));
+          acc[dayIndex] = day;
         }
-      } else if (name === 'trainer_id' || name === 'hall' || name==='registration_fee') {
-        setNewCourse({
-          ...newCourse,
-          [name]: Number(value),
-        });
-      }else {
-        setNewCourse({
-          ...newCourse,
-          [name]: value,
-        });
-      }
-    };
+        return acc;
+      }, {});
+
+      setNewCourse((prevCourse) => ({
+        ...prevCourse,
+        days_of_week: updatedDays,
+      }));
+    } else if (name === 'trainer_id' || name === 'hall' || name === 'registration_fee') {
+      setNewCourse({
+        ...newCourse,
+        [name]: Number(value),
+      });
+    } else {
+      setNewCourse({
+        ...newCourse,
+        [name]: value,
+      });
+    }
+  };
+
     
 
 
@@ -383,7 +392,7 @@ console.log("coaches id", coaches.map((coach)=> coach.id))
               label="Max number of trainees"
               name="allowed_number_for_class"
               value= {newCourse.allowed_number_for_class}
-              onChange={(e)=>handleChange(e)}
+              onChange={(e)=>{handleChange({target:{name: 'allowed_number_for_class', value:e}})}}
 />
              <NumberInput
               label="Allow to cancel"
@@ -422,12 +431,12 @@ console.log("coaches id", coaches.map((coach)=> coach.id))
               value={newCourse.end_time}
               onChange={(e)=>handleChange(e)}
               />
-             <MultiSelect
-               label="Select the days"
-               name='days_of_week'
-               data={['sunday', 'monday', 'tusday','wedensday','thursday','friday','saturday']}
-               onChange={(value) => handleChange({ target: { name: 'days_of_week', value } })}
-               />
+                  <MultiSelect
+          label="Select the days"
+          name='days_of_week'
+          data={['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']}
+          onChange={(value) => handleChange({ target: { name: 'days_of_week', value } })}
+        />
             <Select
              label="Hall"
              name='hall'
