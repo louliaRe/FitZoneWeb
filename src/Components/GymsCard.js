@@ -1,4 +1,4 @@
-import { Card, Image, Text } from '@mantine/core';
+import { Card, Image, Text, Title } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
 import './GymsCard.css';
 
@@ -13,13 +13,13 @@ const GymsCard=()=>{
     return(
         
         <Card
-        shadow="xl"
-        padding="lg"
+        shadow="sm"
        className="gyms-card"
        onClick={handleGyms}
        
     >
-      <Text className='text'>Gyms</Text>
+      <Title className='text'>Gyms</Title>
+      <Image src="./gym.jpg" className='im'/>
         </Card>
     )
 }
