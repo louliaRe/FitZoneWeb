@@ -1,0 +1,14 @@
+.title{
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+  align-self: center;
+  margin-right: 200px;
+    margin-top: 10px;
+    color: #fff;
+    margin-bottom: 10px;
+    
+    
+
+}

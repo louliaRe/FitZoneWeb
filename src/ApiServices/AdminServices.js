@@ -114,3 +114,82 @@ export const addBranch = async (accessToken,gymId, branchData) => {
       throw error;
     }
   };
+
+  export const getVouchers= async(accessToken)=>{
+    try{
+        const response = await axios.get(`${API_URL}/vouchers/`,{
+                    headers:{
+                        Authorization: `Bearer ${accessToken}`
+                    }
+                });
+                console.log("res of getVouchers:", response.data)
+                return response.data;
+    }catch(e){
+      console.error("get vouchers",e);
+      throw e;
+    }
+  }
+
+  export const addVoucher=async(accessToken, data)=>{
+    console.log ("data Of adding vouchee", JSON.stringify(data));
+    try{
+        const res= await axios.post(`${API_URL}/vouchers/`, JSON.stringify(data),{
+            headers:{
+                Authorization: `Bearer ${accessToken}`
+            }
+        });
+        console.log("res of add voucher:", res.data)
+        return res.data;
+    }catch(e){
+        console.error("add voucher",e);
+        throw e;
+    }
+  }
+  export const EditVouchers= async (accessToken, id, data) => {
+    try{
+        console.log("edit voucher", data)
+        const res= await axios.put(`${API_URL}/vouchers/${id}/`, data,{
+            headers:{
+                Authorization:`Bearer ${accessToken}`
+            }
+       })
+       console.log("res of edit vouchers:", res);
+       return res.data;
+    }catch(e){
+     console.log("error edit", e);
+     throw e;
+    }
+  }
+
+  export const getPoints= async(accessToken)=>{
+    try{
+        const res= await axios.get(`${API_URL}/points/`,{
+            headers:{
+                Authorization:`Bearer ${accessToken}`
+            }
+        });
+        console.log("res of get points:", res.data)
+        return res.data;
+
+
+    }catch(e){
+        console.error("get points",e);
+                throw e;
+    }
+  }
+
+  export const EditPoint= async( accessToken, id, points, points_percentage)=>{
+    console.log("post points",points)
+    try{
+       const res= await axios.put(`${API_URL}/points/${id}/`,{points,points_percentage},{
+        headers:{
+            Authorization:`Bearer ${accessToken}`
+        }
+       })
+       console.log("res of edit points:", res);
+       return res.data;
+    }catch(e){
+     console.log("error edit", e);
+     throw e;
+    }
+  }

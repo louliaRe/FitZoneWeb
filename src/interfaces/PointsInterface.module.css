@@ -1,0 +1,13 @@
+.card{
+    background-color: #2c2c2c;
+    color: #fff;
+    /* size: 400px !important; */
+    border-color: #a1E533 !important;
+
+}
+.container{
+ display: flex !important;
+ align-items: center !important;
+ justify-content: center !important;
+
+}
