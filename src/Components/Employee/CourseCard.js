@@ -12,6 +12,7 @@ const [loading, setLoading] = useState (false)
 
 useEffect (() => {
   console.log (course)
+  
 }, )
   console.log("course inside card", course)
   const handleEdit = () => {
@@ -31,14 +32,14 @@ useEffect (() => {
     <>
       <Card shadow="sm" padding="lg" className={classes.card}>
         <Card.Section>
-          <Image src={course.image} height={160} alt={course.name} />
+          <Image src={course.image_path} height={160} alt={course.name} />
         </Card.Section>
 
         <Group position="apart" style={{ marginBottom: 5, marginTop: 10 }}>
           <Text className={classes.name}>{course.name}</Text>
         </Group>
 
-        <Text size="sm">Coach: {course.schedule && Array.isArray(course.schedule)
+        <Text size="sm"><Text className={classes.title}>Coach:</Text> {course.schedule && Array.isArray(course.schedule)
           ? course.schedule.map((co) => co.trainer.employee.user.username).join(', ')
           : "No schedule available"}</Text>
         <Text size="sm">Duration: <bold style={{color:'#a1E533'}}>from:</bold> {course.schedule && Array.isArray(course.schedule)
@@ -47,8 +48,8 @@ useEffect (() => {
         <Text size="sm">Dates: <bold style={{color:'#a1E533'}}>from:</bold> {course.schedule && Array.isArray(course.schedule)
           ?course.schedule.map((co) => co.start_time).join(','): "No schedule available"}  <bold style={{color:'#a1E533'}}>to: </bold>{course.schedule && Array.isArray(course.schedule)
             ?course.schedule.map((co) => co.start_date).join(','): "No date available"}  <bold style={{color:'#a1E533'}}>to: </bold>{course.schedule && Array.isArray(course.schedule)?course.schedule.map((co) => co.end_date).join(',') : "No available date"}</Text>
-        <Text size="sm">Registration: {course.schedule && Array.isArray(course.schedule)
-          ?course.schedule.map((co) => co.registration_fee).join(','): "No schedule available"}</Text>
+        <Text size="sm">Registration: 
+          {course.registration_fee}</Text>
 
         <Group className={classes.group}>
           <Button onClick={handleEdit} color="lime">Edit</Button>
