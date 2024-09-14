@@ -35,8 +35,10 @@ const EmpTable = () => {
   const handleAddEmp = async () => {
     try {
       const addedEmp = await postEmployee(id, newEmp);
-      setEmps([...emps, addedEmp]);
-      setNewEmp({ username: '', Email: '', password: '', Gender: '', shift: '', days_off: [], birthday:'' }); // Reset form
+      console.log(addedEmp)
+      // setEmps([...emps, addedEmp]);
+
+      // setNewEmp({ username: '', Email: '', password: '', Gender: '', shift: '', days_off: [], birthday:'' }); // Reset form
       // close();
     } catch (error) {
       console.error('Error adding employee:', error.message);
