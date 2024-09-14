@@ -126,16 +126,18 @@ export const GetMachinesInside = async (accessToken, hallId  ) =>{
     }
 }
 
-export const AddExerciseToMachine = async (accessToken, machineId, exerciseId )=>{
+export const AddExerciseToMachine = async (accessToken, machineId , data)=>{
     try{
-      const response= await axios.post(`${API_URL}diagram/exercise-create/${machineId}/`, {exercise_id: exerciseId}, {
+      const response= await axios.post(`${API_URL}diagram/exercise-create/${machineId}/`,data, {
         headers:{
             Authorization: `Bearer ${accessToken}`
         }
       })
       console.log("add exercise", response.data)
+      return response.data;
     }catch(error){
       console.error("error adding exercise to machine", error)
+      throw(error);
     }
 }
 
