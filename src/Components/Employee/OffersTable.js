@@ -1,5 +1,5 @@
     import React, {useState,useEffect} from "react";
-    import { Table, Container, ActionIcon, Modal, NumberInput, Button } from "@mantine/core";
+    import { Table, Container, ActionIcon, Modal, NumberInput, Button , Loader} from "@mantine/core";
     import { DateInput } from "@mantine/dates";
     import { useAuth } from "../../AuthContext";
     import { getClassOffers } from "../../ApiServices/OffersServices";
@@ -17,6 +17,7 @@
         const [amount, setAmount] = useState(null);
         const [startDate, setStartDate] = useState(null);
         const [endDate, setEndDate] = useState(null);
+        const [Loading, setLoading]= useState(true)
         const [errors, setErrors] = useState({});
 
     
@@ -26,6 +27,8 @@
         useEffect(() => {
             if (Array.isArray(offer)) {
                 setData(offer);
+                setLoading(false);
+
             } else {
                 setData([]);
             }
@@ -100,7 +103,7 @@
         }
             const rows = data.map((off) => (
                 <Table.Tr key={off.offer_id}>
-                <Table.Td>{off.percentage_offer.class_data.class_details.name}</Table.Td>
+                <Table.Td>{off.percentage_offer.class_data.percentage_cut}</Table.Td>
 
                 <Table.Td>{off.percentage_offer.percentage_cut}</Table.Td>
                 <Table.Td>{off.percentage_offer.class_data.class_details.registration_fee}</Table.Td>
