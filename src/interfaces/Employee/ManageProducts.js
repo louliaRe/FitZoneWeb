@@ -14,10 +14,6 @@ const ManageProduct=()=>{
     const { authState } = useAuth(); 
     const navigate = useNavigate();
 const [products, setProducts]= useState([]);
-const [newMealProduct, setNewMealProduct] = useState({name:'', description:'', protien:0, calories:0,carbs:0, used_for:'', amount:100, price:null })
-const [newSuppProduct, setNewSuppProduct] = useState({protien:0, calories:0,caffeine:100,weight:10,flavor:'',amount:100, price:null })
-const [newAccProduct, setNewAccProduct] = useState({name:'', color:[], amount:60,  size:''})
-// const [opened, { open, close }] = useDisclosure(false);
 const [errors, setErrors] = useState({});
 const [search, setSearch] = useState('');
 
