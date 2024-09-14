@@ -42,7 +42,7 @@ export const classOffer= async (accessToken, id, data)=>{
 export const getClassOffers = async (accessToken, id) =>{
     try{
     
-        const response = await axios.get(`${API_URL}/offers/percentage/class/${id}/`,{
+        const response = await axios.get(`${API_URL}offers/percentage/class/${id}/`,{
             headers:{
                 Authorization: `Bearer ${accessToken}`,
                
@@ -150,8 +150,8 @@ export const getProducts= async (accessToken, branch_id)=>{
            
         },
     })
-     console.log("res of products:", res.data.results);
-     return res.data.results;
+     console.log("res of products:", res.data);
+     return res.data;
     }catch(e){
       console.error("get products",e);
       throw e;
