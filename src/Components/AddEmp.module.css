@@ -1,22 +1,20 @@
-
 .card {
-    background-color: #a1E533;
-    cursor: pointer;
-    width: 400px;
-    height: 375px;
+  background-color: #a1e533;
+  cursor: pointer;
+  width: 400px;
+  height: 375px;
+  margin-top: 100px;
+}
 
-  }
-  
-  .section {
-    border-bottom: 1px solid ;
-    padding-left: var(--mantine-spacing-md);
-    padding-right: var(--mantine-spacing-md);
-    padding-bottom: var(--mantine-spacing-md);
-  }
-  
-  
-  .label {
-    text-transform: uppercase;
-    font-size: var(--mantine-font-size-xs);
-    font-weight: 700;
-  }
+.section {
+  border-bottom: 1px solid;
+  padding-left: var(--mantine-spacing-md);
+  padding-right: var(--mantine-spacing-md);
+  padding-bottom: var(--mantine-spacing-md);
+}
+
+.label {
+  text-transform: uppercase;
+  font-size: var(--mantine-font-size-xs);
+  font-weight: 700;
+}

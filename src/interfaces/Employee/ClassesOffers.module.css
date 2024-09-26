@@ -1,25 +1,25 @@
 .TB {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 5px;
-  }
-  .submit{
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    align-self: center;
-    margin: 10px;
-  }
-  .search{
-    margin-left: 420px !important;
-     padding: 3px;
-    font-size: 16px;
-  }
-  .select{
-    width: 120px; ;
-  }
-  .btn{
-    margin-left: 5%;
-    width: max-content !important;
-  }
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+.submit {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-self: center;
+  margin: 10px;
+}
+.search {
+  margin-left: 420px !important;
+  padding: 3px;
+  font-size: 16px;
+}
+.select {
+  width: 120px;
+}
+.btn {
+  margin-left: 5%;
+  width: max-content !important;
+}

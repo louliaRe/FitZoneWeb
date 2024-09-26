@@ -1,18 +1,17 @@
 .tablee {
-    /* width: 80% !important; */
-    justify-content: center;
-    flex-direction: column;
-    align-content: center;
-    align-items: center;
-    background-color: 
-    #2e2d2d;
-    color: antiquewhite;
-    margin-left: -100px;
-  }
+  /* width: 80% !important; */
+  justify-content: center;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+  background-color: #2e2d2d;
+  color: antiquewhite;
 
-  .head{
-   color: #a1E533;
-   font-weight: bold;
-   font-size: medium;
-  }
-  
+  width: 100%;
+}
+
+.head {
+  color: #a1e533;
+  font-weight: bold;
+  font-size: medium;
+}

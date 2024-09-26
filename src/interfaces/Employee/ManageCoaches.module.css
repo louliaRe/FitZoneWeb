@@ -23,3 +23,9 @@
     margin-left: 5%;
     width: max-content !important;
   }
+  .loader{
+    display: flex;
+    align-items: center;
+    margin-top: 20%;
+    margin-left: 48%;
+  }

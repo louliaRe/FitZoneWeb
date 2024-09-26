@@ -1,20 +1,16 @@
-
-
 .TB {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 5px;
-  }
-  .submit{
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    align-self: center;
-    margin: 10px;
-  }
-  .search{
-    margin-left: 380px !important;
-     padding: 5px;
-    font-size: 16px;
-  }
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+.submit {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-self: center;
+  margin: 10px;
+}
+.search {
+  padding: 5px;
+  font-size: 16px;
+}

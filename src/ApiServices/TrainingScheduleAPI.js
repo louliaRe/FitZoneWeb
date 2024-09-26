@@ -13,7 +13,7 @@ export const getExerciseseq= async (accessToken, branch_id) =>{
             }
         });
         console.log("Exercise sequence fetched successfully:", response.data);
-        return response.data;
+        return response.data.results;
     }
     catch(error){
         console.error("Error fetching exercise sequence:", error);

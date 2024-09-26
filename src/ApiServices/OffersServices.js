@@ -177,7 +177,7 @@ export const getProductsOffers= async (accessToken, branch_id)=>{
 export const addProductOffer=async (accessToken, branch_id, data)=>{
     try{
         console.log("addProductOffer req", JSON.stringify(data));
-     const res = await axios.post(`${API_URL}offers/price/products/${branch_id}/`,data,{
+     const res = await axios.post(`${API_URL}offers/price/products/${branch_id}/`,JSON.stringify(data),{
         headers:{
             Authorization: `Bearer ${accessToken}`,
            

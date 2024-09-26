@@ -67,7 +67,7 @@ export const getExercises = async (accessToken )=>{
 
   export const getAllMachines = async (accessToken )=>{
     try{
-        const response = await axios.get(`${API_URL}/diagram/equipment/`, {
+        const response = await axios.get(`${API_URL}diagram/equipment/`, {
             headers: {
                 Authorization: `Bearer ${accessToken}`,
             }})

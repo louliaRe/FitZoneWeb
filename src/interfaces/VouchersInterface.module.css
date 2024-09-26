@@ -1,21 +1,22 @@
-.header{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-right: 210px;
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-right: 210px;
+  width: 100%;
 }
 
-.con{
-    align-items: center;
+.con {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-btn{
-    flex:1;
-    margin-bottom: 20px;
+btn {
+  flex: 1;
 }
-.icon{
-    flex: 1;
-    /* font-size: 30px;
+.icon {
+  flex: 1;
+  /* font-size: 30px;
     /* margin-right: 10px; */
-    margin-left: 30px;
-
+  margin-left: 30px;
 }

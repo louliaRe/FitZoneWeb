@@ -1,10 +1,11 @@
-.search{
-    margin-left: 380px !important;
-     padding: 5px;
-    font-size: 16px;
-  }
-  .HS{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
+.search {
+  margin-left: 380px !important;
+  padding: 5px;
+  font-size: 16px;
+}
+.HS {
+  width: 97%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

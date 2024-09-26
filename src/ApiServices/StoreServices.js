@@ -166,7 +166,7 @@ export const AddAccessories = async(accessToken,branch_id,formData)=>{
 
 export const fetchProductinsideSys = async (accessToken, branch_id, categoryId) =>{
    try{
-    const response = await axios.get(`${API_URL}/category/products/${categoryId}/ `,{
+    const response = await axios.get(`${API_URL}category/products/${categoryId}/ `,{
       headers:{
         Authorization:`Bearer ${accessToken}`
       }
@@ -191,7 +191,7 @@ export const EditProduct = async (accessToken, branch_product_id, data)=>{
   
      return response.data;
   }catch(error){
- console.error(error)
-throw error.response.data;
+ console.error(error.response.data.message)
+throw error.response.data.message;
   }
 }

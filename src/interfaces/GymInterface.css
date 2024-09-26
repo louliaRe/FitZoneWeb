@@ -1,18 +1,15 @@
 .TB {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 5px;
-    margin-left: -100 !important;
-  }
-  .submit{
-
-    margin-left: 35%  !important;
-    background-color: #a1E533;
-
-  }
-  .search{
-    margin-left: 380px !important;
-     padding: 5px;
-    font-size: 16px;
-  }
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+.submit {
+  margin-left: 35% !important;
+  background-color: #a1e533;
+}
+.search {
+  margin-left: 380px !important;
+  padding: 5px;
+  font-size: 16px;
+}
