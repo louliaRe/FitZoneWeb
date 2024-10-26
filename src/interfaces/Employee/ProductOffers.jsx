@@ -16,8 +16,9 @@ const ProductOffers = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    setLoading(true);
+
     const fetchData = async () => {
-      setLoading(true);
       try {
         const res = await getProductsOffers(
           authState.accessToken,

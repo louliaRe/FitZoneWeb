@@ -16,6 +16,7 @@ const ClassesOffers = () => {
   const { authState } = useAuth();
 
   useEffect(() => {
+    setLoading(true);
     const res = async () => {
       try {
         const offer = await getClassOffers(
@@ -39,6 +40,10 @@ const ClassesOffers = () => {
   const handleSearch = (event) => {
     setSearch(event.target.value);
   };
+
+  if(loading){
+    return <Loader size="lg" color="lime" />;
+  }
 
   return (
     <Layout>

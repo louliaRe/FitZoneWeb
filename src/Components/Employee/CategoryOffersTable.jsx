@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import { Container, Button, Table, Text, ActionIcon, NumberInput, Modal  } from "@mantine/core";
+import { Container, Button, Table, Text, ActionIcon, NumberInput, Modal  ,Loader} from "@mantine/core";
 import { DateInput } from "@mantine/dates";
 import { IconPencil,IconTrash } from "@tabler/icons-react";
 import { useAuth } from "../../AuthContext";
@@ -8,6 +8,7 @@ import { UpdateClassOffer, DeleteClassOffer } from "../../ApiServices/OffersServ
 import moment from "moment";
 
 const CategoryOffersTable =({offer})=>{
+    const [loading, setLoading]= useState(false);
     const { authState } = useAuth();
     const [data, setData] = useState([]);
     const [opened, setOpened] = useState(false);
@@ -20,8 +21,10 @@ const CategoryOffersTable =({offer})=>{
         console.log("offers", offer);
 
         useEffect(() => {
+            setLoading(true);
             if (Array.isArray(offer)) {
                 setData(offer);
+                setLoading(false);
             } else {
                 setData([]);
             }
@@ -69,6 +72,9 @@ const CategoryOffersTable =({offer})=>{
                 }
         }
     }
+    if(loading){
+        return <Loader size="lg" color="lime" />;
+      }
 
     const handleEditClick = (off) => {
         console.log("ee", off)
@@ -92,9 +98,9 @@ const CategoryOffersTable =({offer})=>{
 
         const rows = data.map((off) => (
             <Table.Tr key={off.offer_id}>
-            <Table.Td>{off.percentage_offer.category_data.name}</Table.Td>
+            <Table.Td>{off.percentage_offer?.category_data?.name}/{off.price_offer?.price_offer_objects?.product}</Table.Td>
 
-            <Table.Td>{off.percentage_offer.percentage_cut}</Table.Td>
+            <Table.Td>{off.percentage_offer?.percentage_cut}/{off.price_offer?.price}</Table.Td>
 
             <Table.Td>{off.start_date}</Table.Td>
             <Table.Td>{off.end_date}</Table.Td>

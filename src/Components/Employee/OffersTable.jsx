@@ -17,19 +17,21 @@
         const [amount, setAmount] = useState(null);
         const [startDate, setStartDate] = useState(null);
         const [endDate, setEndDate] = useState(null);
-        const [Loading, setLoading]= useState(true)
+        const [loading, setLoading]= useState(false)
         const [errors, setErrors] = useState({});
 
     
 
         console.log("offers", offer);
-
+    
         useEffect(() => {
+            setLoading(true)
             if (Array.isArray(offer)) {
                 setData(offer);
                 setLoading(false);
 
             } else {
+                setLoading(true)
                 setData([]);
             }
         }, [offer]);
@@ -55,6 +57,10 @@
                 console.log("error:", e);
             }
         };
+
+        if(loading){
+            return <Loader size="lg" color="lime" />;
+          }
 
         const handleEditSubmit = async (id) => {
 
@@ -103,10 +109,13 @@
         }
             const rows = data.map((off) => (
                 <Table.Tr key={off.offer_id}>
+            <Table.Td>{off.branch.address}</Table.Td>
+
                 <Table.Td>{off.percentage_offer.class_data.percentage_cut}</Table.Td>
+                <Table.Td>{off.percentage_offer.percentage_cut}</Table.Td>
 
                 <Table.Td>{off.percentage_offer.percentage_cut}</Table.Td>
-                <Table.Td>{off.percentage_offer.class_data.class_details.registration_fee}</Table.Td>
+                {/* <Table.Td>{off.percentage_offer.class_data.class_details.registration_fee}</Table.Td> */}
 
                 <Table.Td>{moment(off.start_date).format('YYYY-MM-DD')}</Table.Td>
                 <Table.Td>{off.end_date}</Table.Td>
@@ -123,6 +132,9 @@
         </Table.Td>
         </Table.Tr>
     ));
+    if(loading){
+        return <Loader size="lg" color="lime" />;
+      }
 
     return(
     <Container>
